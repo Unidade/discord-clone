@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "exports": "./dist/index.js",
+  "main": "./src/server.ts",
+  "exports": "./dist/server.js",
   "scripts": {
     "watch": "nodemon --watch ./**/*.ts --exec node --experimental-specifier-resolution=node --loader ts-node/esm src/server.ts",
     "dev": "tsc-watch --onSuccess \"npm run watch\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Dario Rodrigues do Carmo",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

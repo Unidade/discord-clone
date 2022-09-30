@@ -26,13 +26,15 @@ export default async function postRegister(req, res) {
         // create JWT token
         const token = jwt.sign({
             userId: user._id,
-        }, process.env.TOKEN_KEY);
+        }, process.env.TOKEN_KEY, {
+            expiresIn: '24h',
+        });
         // response
         res.status(201).json({
             userDetails: {
                 email: user.email,
                 username: user.username,
-                token: token,
+                token,
             },
         });
     }

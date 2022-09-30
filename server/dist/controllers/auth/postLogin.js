@@ -1,17 +1,22 @@
 import User from '../../models/userModel';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 export default async function postLogin(req, res) {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email: email.toLowerCase() });
         if (user && (await bcrypt.compare(password, user.password))) {
             // send new token
-            const token = 'JWT_TOKEN';
+            const token = jwt.sign({
+                userId: user._id,
+            }, process.env.TOKEN_KEY, {
+                expiresIn: '24h',
+            });
             return res.status(200).json({
                 userDetails: {
                     email: user.email,
-                    token,
                     username: user.username,
+                    token,
                 },
             });
         }

@@ -17,7 +17,7 @@ export default async function postRegister(req: Request, res: Response) {
       $or: [{ username: userData.username }, { email: userData.email }],
     })
 
-    console.log('user exists: ', duplicateUserInfo)
+    console.log('duplicateUserInfo: ', duplicateUserInfo)
     if (duplicateUserInfo.length !== 0) {
       return res.status(409).send('Username or E-mail already in use')
     }
@@ -31,21 +31,25 @@ export default async function postRegister(req: Request, res: Response) {
       ...userData,
       password: encryptedPassword,
     })
-
+    console.log('Eai')
     // create JWT token
     const token = jwt.sign(
       {
         userId: user._id,
+        email: userData.email,
       },
-      process.env.TOKEN_KEY
+      process.env.TOKEN_KEY,
+      {
+        expiresIn: '24h',
+      }
     )
 
     // response
-    res.status(201).json({
+    return res.status(201).json({
       userDetails: {
         email: user.email,
         username: user.username,
-        token: token,
+        token,
       },
     })
   } catch (err) {

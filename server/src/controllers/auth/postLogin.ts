@@ -7,17 +7,30 @@ export default async function postLogin(req: Request, res: Response) {
   try {
     const { email, password } = req.body
 
-    const user = await User.findOne({ email: email.toLowerCase() })
+    const userData = {
+      email: email.toLowerCase(),
+    }
+
+    const user = await User.findOne({ email: userData.email })
 
     if (user && (await bcrypt.compare(password, user.password))) {
       // send new token
-      const token = 'JWT_TOKEN'
+      const token = jwt.sign(
+        {
+          userId: user._id,
+          email: userData.email,
+        },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: '24h',
+        }
+      )
 
       return res.status(200).json({
         userDetails: {
           email: user.email,
-          token,
           username: user.username,
+          token,
         },
       })
     } else {
