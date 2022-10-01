@@ -31,7 +31,7 @@ export default async function postRegister(req: Request, res: Response) {
       ...userData,
       password: encryptedPassword,
     })
-    console.log('Eai')
+
     // create JWT token
     const token = jwt.sign(
       {
