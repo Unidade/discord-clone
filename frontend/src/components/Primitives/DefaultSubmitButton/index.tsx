@@ -2,16 +2,19 @@ import { Button } from '@mui/material'
 
 interface DefaultSubmitButtonProps {
   children: React.ReactNode
-  disabled?: boolean
+  onClick?: () => void
+  abled?: boolean
 }
 
 export default function DefaultSubmitButton({
   children,
-  disabled = false,
+  abled = true,
+  onClick,
 }: DefaultSubmitButtonProps) {
   return (
     <Button
-      disabled={disabled}
+      onClick={onClick}
+      disabled={!abled}
       variant='contained'
       sx={{
         width: 1,

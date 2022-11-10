@@ -17,7 +17,6 @@ const Input = styled(InputBase)(({ theme }) => ({
     backgroundColor: '#222',
     fontSize: 16,
     padding: '10px 12px',
-    textTransform: 'uppercase',
     marginBottom: '15px',
   },
 }))
@@ -27,6 +26,8 @@ interface DefaultInputProps {
   id: string
   type?: 'text' | 'password'
   required?: boolean
+  value?: string
+  setValue?: (value: string) => void
 }
 
 export default function DefaultInput({
@@ -34,6 +35,8 @@ export default function DefaultInput({
   id,
   type = 'text',
   required = true,
+  value,
+  setValue,
 }: DefaultInputProps) {
   return (
     <FormControl sx={{ width: 1 }} variant='standard'>
@@ -51,7 +54,14 @@ export default function DefaultInput({
         {label}
         {required && <Required>*</Required>}
       </InputLabel>
-      <Input type={type} id={id} />
+      <Input
+        value={value}
+        onChange={(e) => {
+          setValue && setValue(e.target.value.trim())
+        }}
+        type={type}
+        id={id}
+      />
     </FormControl>
   )
 }

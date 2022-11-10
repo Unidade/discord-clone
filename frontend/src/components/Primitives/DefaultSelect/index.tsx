@@ -1,23 +1,22 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { useState } from 'react'
 
 interface DefaultSelectProps {
   id: string
   placeholder: string
   itens: string[]
-  defaultValue?: string
+  value?: string
+  setValue?: (value: string) => void
 }
 
 export default function DefaultSelect({
   itens,
   id,
   placeholder,
-  defaultValue = '',
+  value = '',
+  setValue,
 }: DefaultSelectProps) {
-  const [state, setState] = useState(defaultValue)
   const handleChange = (event: SelectChangeEvent) => {
-    console.log(state)
-    setState(event.target.value)
+    setValue && setValue(event.target.value)
   }
 
   return (
@@ -26,7 +25,6 @@ export default function DefaultSelect({
         id={id}
         MenuProps={{
           color: 'rgb(220, 221, 222)',
-
           anchorOrigin: {
             vertical: 'top',
             horizontal: 'left',
@@ -57,7 +55,7 @@ export default function DefaultSelect({
               }
             : {},
         }}
-        value={state}
+        value={value}
         onChange={handleChange}
       >
         {itens.map((item) => (

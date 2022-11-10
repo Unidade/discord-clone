@@ -1,36 +1,55 @@
 import { Box, Typography } from '@mui/material'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import AuthBox from '../../components/AuthBox'
-import DefaultSubmitButton from '../../components/DefaultSubmitButton'
-import DefaultInput from '../../components/DefaultInput'
-import AuthTitle from '../../components/AuthTitle'
+import DefaultSubmitButton from '../../components/Primitives/DefaultSubmitButton'
+import LabelWithRedirect from '../../components/LabelWithRedirect'
+import LoginPageHeader from '../../components/LoginPageHeader'
+import {
+  validateLoginForm,
+  getValidatorsLoginForm,
+} from '../../shared/utils/validators'
+import LoginInputs from '../../components/LoginInputs'
+import { loginAsync } from '../../store/reducers/authorization/authorizationSlice'
+import { useAppDispatch } from '../../hooks/reduxHooks'
 
 export default function Login() {
+  const dispatch = useAppDispatch()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isFormValid, setIsFormValid] = useState(false)
+  const [showErrors, setShowErrors] = useState(false)
+
+  const loginValidators = getValidatorsLoginForm({ email, password })
+
+  useEffect(() => {
+    setIsFormValid(validateLoginForm({ ...loginValidators }))
+  }, [email, password, setIsFormValid, loginValidators])
+
+  const handleLogin = () => {
+    setShowErrors(!isFormValid)
+    if (isFormValid) {
+      const data = {
+        email,
+        password,
+      }
+      dispatch(loginAsync(data))
+      console.log(data)
+    }
+  }
+
   return (
     <AuthBox>
-      <Box sx={{ textAlign: 'center', marginBottom: '1.4rem' }}>
-        <AuthTitle>Welcome Back!</AuthTitle>
-        <Typography
-          color={'#B9BBBE'}
-          gutterBottom
-          variant='h6'
-          fontWeight={300}
-        >
-          We are happy to see you again!
-        </Typography>
-      </Box>
-
-      <Box
-        component='form'
-        sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-        autoComplete='false'
-      >
-        <DefaultInput id='discord-text-input' label='E-mail or Number Phone' />
-        <DefaultInput
-          id='discord-password-input'
-          type='password'
-          label='Password'
+      <LoginPageHeader />
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <LoginInputs
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          validators={showErrors ? loginValidators : undefined}
         />
         <Link to='/register'>
           <Typography
@@ -41,14 +60,13 @@ export default function Login() {
             Forgot your password?
           </Typography>
         </Link>
-        <DefaultSubmitButton>Log In</DefaultSubmitButton>
+        <DefaultSubmitButton onClick={handleLogin}>Log In</DefaultSubmitButton>
       </Box>
-      <div className='small-text light-gray-text mt-1'>
-        Need an account?{' '}
-        <Link to='/register' className='blue-text no-underline'>
-          Register
-        </Link>
-      </div>
+      <LabelWithRedirect
+        label='Need an account?'
+        redirect='/register'
+        redirectText='Register'
+      />
     </AuthBox>
   )
 }

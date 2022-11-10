@@ -1,5 +1,5 @@
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material'
-import { AppProps } from '../shared/AppProps.d'
+import { AppProps } from '../types/AppProps'
 
 let theme = createTheme({
   palette: {
@@ -24,7 +24,6 @@ let theme = createTheme({
 })
 
 theme = responsiveFontSizes(theme)
-console.log(theme)
 
 export const ThemeProviderWithTheme = ({ children }: AppProps) => (
   <ThemeProvider theme={theme}>{children}</ThemeProvider>

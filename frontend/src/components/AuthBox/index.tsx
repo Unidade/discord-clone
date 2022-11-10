@@ -1,6 +1,6 @@
 import Box, { BoxProps } from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
-import { AppProps } from '../../shared/AppProps.d'
+
 import AuthBoxHeader from '../AuthBoxHeader'
 
 const BoxWrapper = styled('div')({
