@@ -1,13 +1,11 @@
 {
   "name": "discord-clone",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
   "main": "./src/server.ts",
-  "exports": "./dist/server.js",
   "scripts": {
-    "watch": "nodemon --watch ./**/*.ts --exec node --experimental-specifier-resolution=node --loader ts-node/esm src/server.ts",
+    "watch": "nodemon --watch ./**/*.ts --exec node --experimental-specifier-resolution=node --loader ts-node/esm dist/server.js",
     "dev": "tsc-watch --onSuccess \"npm run watch\"",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dario Rodrigues do Carmo",

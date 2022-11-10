@@ -1,11 +1,11 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
 import app from './app'
 import dbConnect from './database/dbconnection'
 
-import * as dotenv from 'dotenv'
 import * as http from 'http'
-dotenv.config()
 
-const PORT = process.env.PORT || process.env.API_PORT
+const PORT = process.env.PORT || 5000
 
 const server = http.createServer(app)
 

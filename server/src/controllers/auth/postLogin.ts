@@ -7,6 +7,7 @@ export default async function postLogin(req: Request, res: Response) {
   try {
     const { email, password } = req.body
 
+    console.log(req.body)
     const userData = {
       email: email.toLowerCase(),
     }
