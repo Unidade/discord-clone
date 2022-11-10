@@ -1,0 +1,27 @@
+{
+  "name": "discord-clone",
+  "version": "1.0.0",
+  "description": "This is the mono repo of the discord clone project",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd frontend && npm run build && cd ..\\server && npm run build",
+    "start": "node server/dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Unidade/discord-clone.git"
+  },
+  "keywords": [
+    "react",
+    "express",
+    "fullstack",
+    "mongodb"
+  ],
+  "author": "Dario Rodrigues do Carmo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Unidade/discord-clone/issues"
+  },
+  "homepage": "https://github.com/Unidade/discord-clone#readme"
+}
