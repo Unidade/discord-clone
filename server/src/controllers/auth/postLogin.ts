@@ -27,12 +27,14 @@ export default async function postLogin(req: Request, res: Response) {
         }
       )
 
+      const userDetails = {
+        email: user.email,
+        username: user.username,
+        token,
+      }
+
       return res.status(200).json({
-        userDetails: {
-          email: user.email,
-          username: user.username,
-          token,
-        },
+        ...userDetails,
       })
     } else {
       return res.status(400).send('Invalid credentials. Please try again')

@@ -6,11 +6,12 @@ import User from '../../models/userModel'
 
 export default async function postRegister(req: Request, res: Response) {
   try {
-    const { username, email, password } = req.body
+    const { username, email, password, birthday } = req.body
 
     const userData = {
       username: username.trim(),
       email: email.toLowerCase(),
+      birthday,
     }
     // check if user data already exists in database
     const duplicateUserInfo = await User.find({
@@ -44,13 +45,15 @@ export default async function postRegister(req: Request, res: Response) {
       }
     )
 
+    const userDetails = {
+      email: user.email,
+      username: user.username,
+      token,
+    }
+
     // response
     return res.status(201).json({
-      userDetails: {
-        email: user.email,
-        username: user.username,
-        token,
-      },
+      ...userDetails,
     })
   } catch (err) {
     return res.status(500).send('Error occurred. Please try again')

@@ -46,7 +46,7 @@ export default function DefaultSelect({
           paddingLeft: 0,
           bgcolor: '#222',
           color: 'rgb(220, 221, 222)',
-          width: '132px',
+          width: { sx: '72px', sm: '132px' },
           height: '38px',
           '& .MuiSelect-select .notranslate::after': placeholder
             ? {

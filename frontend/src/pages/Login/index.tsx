@@ -36,6 +36,13 @@ export default function Login() {
         password,
       }
       dispatch(loginAsync(data))
+        .unwrap()
+        .then((d) => {
+          console.log('Unrwap data success', d)
+        })
+        .catch((d) => {
+          console.log('Unrwap data error', d)
+        })
       console.log(data)
     }
   }

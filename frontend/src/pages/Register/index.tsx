@@ -10,8 +10,13 @@ import {
   validateRegisterForm,
 } from '../../shared/utils/validators'
 import RegisterInputs from '../../components/RegisterInputs'
+import { useAppDispatch } from '../../hooks/reduxHooks'
+import { parseISO } from 'date-fns/esm'
+import { registerAsync } from '../../store/reducers/authorization/authorizationSlice'
+import { getMonthNumber } from '../../shared/utils/getMonthNumber'
 
 export default function Register() {
+  const dispatch = useAppDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
@@ -46,19 +51,21 @@ export default function Register() {
   const handleRegister = () => {
     setShowErrors(!isFormValid)
     if (isFormValid) {
-      console.log({
+      const data = {
         email,
         password,
         username,
-        day,
-        month,
-        year,
-      })
+        birthday: parseISO(
+          `${year}-${getMonthNumber(month)}-${day.padStart(2, '0')}`
+        ),
+      }
+      console.log(data)
+      dispatch(registerAsync(data))
     }
   }
 
   return (
-    <AuthBox sx={{ width: { xs: '450px', sm: '480px' } }}>
+    <AuthBox sx={{ width: { xs: 1, sm: '480px' } }}>
       <Box sx={{ textAlign: 'center', marginBottom: '1.2rem' }}>
         <AuthTitle>Create an account</AuthTitle>
       </Box>

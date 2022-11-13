@@ -1,4 +1,5 @@
 import { parseISO, isValid as isValidDate } from 'date-fns'
+import { getMonthNumber } from './getMonthNumber'
 
 interface LoginFormProps {
   email: string
@@ -112,10 +113,4 @@ const validatorEmail = (email: string) => {
     isValid,
     error: !isValid ? 'Enter a valid e-mail address' : '',
   }
-}
-
-const getMonthNumber = (monthName: string) => {
-  const monthNumber = new Date(`${monthName} 1 2022`).getMonth() + 1
-  const strNumber = String(monthNumber).padStart(2, '0')
-  return strNumber
 }
